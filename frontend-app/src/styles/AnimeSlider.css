@@ -1,0 +1,25 @@
+.anime-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .imgHolder {
+    width: 150px; /* Set desired width */
+    height: 225px; /* Set desired height */
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .imgHolder img {
+    width: 100%;
+    height: auto; /* Ensures the image keeps its aspect ratio */
+  }
+  
+  .imgHolder img.landscape {
+    height: 100%;
+    width: auto;
+  }
+  

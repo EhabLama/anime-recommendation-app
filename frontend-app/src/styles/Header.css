@@ -1,0 +1,93 @@
+.user-popup {
+  position: absolute;
+  top: 70px;
+  right: 49px;
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  width: 300px;
+}
+
+.user-popup h2 {
+  margin-top: 0;
+  color: var(--main-color);
+}
+
+.user-popup form {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-popup form div {
+  margin-bottom: 10px;
+}
+
+.user-popup form label {
+  margin-bottom: 5px;
+}
+
+.user-popup form input {
+  padding: 8px;
+  border: 1px solid #555;
+  border-radius: 4px;
+  background-color: #444;
+  color: #fff;
+}
+
+.user-popup form button {
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: var(--main-color);
+  color: #fff;
+  cursor: pointer;
+}
+
+.user-popup form button:hover {
+  background-color: rgba(0, 123, 255, 0.9);
+}
+
+.user-popup p {
+  margin: 10px 0 0;
+}
+
+.user-popup a {
+  color: var(--main-color);
+  text-decoration: none;
+}
+
+.user-popup a:hover {
+  text-decoration: underline;
+}
+.modal-content {
+    background-color: #333; 
+    color: #fff; 
+    border: none; 
+    border-radius: 8px;
+}
+
+.modal-header, .modal-footer {
+    border: none;
+}
+
+.modal-body {
+    padding: 20px;
+    font-size: 16px;
+}
+
+.auth-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .auth-button:hover {
+    background-color: #0056b3;
+  }

@@ -5,8 +5,8 @@
   }
   
   .imgHolder {
-    width: 150px; /* Set desired width */
-    height: 225px; /* Set desired height */
+    width: 150px;
+    height: 225px;
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -15,11 +15,32 @@
   
   .imgHolder img {
     width: 100%;
-    height: auto; /* Ensures the image keeps its aspect ratio */
+    height: auto;
   }
   
   .imgHolder img.landscape {
     height: 100%;
     width: auto;
+  }
+  .anime-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .anime-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .imgHolder {
+    overflow: hidden;
+    border-radius: 8px;
+  }
+  
+  .imgHolder img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
   }
   

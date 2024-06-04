@@ -1,0 +1,26 @@
+.custom-modal .modal-content {
+    background-color: #2c3e50;
+    color: #ecf0f1; 
+  }
+  
+  .custom-modal .modal-header {
+    border-bottom: 1px solid #34495e;
+  }
+  
+  .custom-modal .modal-footer {
+    border-top: 1px solid #34495e;
+  }
+  
+  .custom-modal .btn-secondary {
+    background-color: #34495e;
+    border-color: #34495e;
+  }
+  
+  .custom-modal .btn-secondary:hover {
+    background-color: #3b536f;
+    border-color: #3b536f;
+  }
+  
+  .custom-modal .modal-title {
+    color: #ecf0f1;
+  }

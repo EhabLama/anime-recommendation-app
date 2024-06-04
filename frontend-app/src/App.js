@@ -4,6 +4,8 @@ import AnimeSlider from './components/AnimeSlider';
 import AppNavbar from './components/Header'; 
 import Footer from './components/Footer';
 import './assets/scss/app.scss'; 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function App() {
   return (

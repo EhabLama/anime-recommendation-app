@@ -18,16 +18,12 @@
   min-height: 100%;
 }
 
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
+
 
 #root {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Ensure it takes the full viewport height */
+  min-height: 100vh;
 }
 
 .container {
@@ -423,7 +419,7 @@ ul {
     max-width: 500px;
     height: 200px;
     overflow: hidden;
-    max-height: calc(1.2em * 6); /* Adjust line height and number of lines */
+    max-height: calc(1.2em * 6);
     text-overflow: ellipsis;
     margin: 40px 0;
   }
@@ -474,9 +470,9 @@ ul {
   }
 }
 .swiper {
-  width: calc(100% + 100px); /* Increase width to accommodate navigation buttons */
+  width: calc(100% + 100px);
   height: 100%;
-  margin-left: -50px; /* Center the container after increasing its width */
+  margin-left: -50px;
   position: relative;
 }
 
@@ -498,17 +494,17 @@ ul {
   transform: translateY(-50%);
   color: white;
   z-index: 10;
-  z-index: 10; /* Ensure buttons are on top */
-  visibility: visible; /* Ensure buttons are visible */
-  display: block !important; /* Override flex display */
+  z-index: 10;
+  visibility: visible;
+  display: block !important;
 }
 
 .swiper-button-prev {
-  left: 0px; /* Push the button further out */
+  left: 0px;
 }
 
 .swiper-button-next {
-  right: -30px; /* Push the button further out */
+  right: -30px;
 }
 
 .swiper-button-prev::after,
@@ -1061,8 +1057,35 @@ footer {
   .animeSlide {
     .mySwiper {
       .swiper-slide {
-        width: calc(100% / 3); /* Adjusted width for smaller screens */
+        width: calc(100% / 3);
       }
     }
   }
+}
+
+.searchIcon {
+  cursor: pointer;
+  position: relative;
+}
+
+.searchIcon i {
+  color: white;
+}
+
+.navbar .nav-link {
+  color: white !important;
+}
+
+.navbar .nav-link:hover {
+  color: var(--main-color) !important;
+}
+
+.app-navbar {
+  background-color: var(--sec-backColor);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }

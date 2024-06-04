@@ -1,28 +1,47 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Pagination, Navigation } from "swiper";
+import { Link } from "react-router-dom";
 import SkeletonSlider from "./SkeletonSlider";
+import { fetchAnimeList } from "../api";
+import AnimeModal from "./AnimeModal";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import "../styles/AnimeSlider.css"; // Import the CSS file
+import "../styles/AnimeSlider.css"; 
 
-const PlaceholderImg = '/images/placeholder.jpg'; // Placeholder image path
+const PlaceholderImg = '/images/placeholder.jpg';
 
 function AnimeSlider() {
   const [animeList, setAnimeList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedAnime, setSelectedAnime] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    fetch('/animeData.json')
-      .then(response => response.json())
-      .then(data => {
+    const loadAnimeList = async () => {
+      try {
+        const data = await fetchAnimeList();
         setAnimeList(data);
         setIsLoading(false);
-      });
+      } catch (error) {
+        console.error("Error fetching anime list:", error);
+        setIsLoading(false);
+      }
+    };
+    loadAnimeList();
   }, []);
+
+  const handleShowModal = (anime) => {
+    setSelectedAnime(anime);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedAnime(null);
+  };
 
   let i = 454;
 
@@ -43,19 +62,17 @@ function AnimeSlider() {
       )}
       {animeList.map((anime) => (
         <SwiperSlide key={anime.anime_id + i++}>
-          <Link to={`/anime/${anime.anime_id}`}>
-            <div className="anime-card">
-              <div className="imgHolder">
-                <img
-                  src={`/images/${anime.anime_id}.jpeg`}
-                  alt={anime.input_anime_title}
-                  onError={(e) => e.target.src = PlaceholderImg}
-                  className={anime.orientation === "landscape" ? "landscape" : ""}
-                />
-              </div>
-              <span>{anime.input_anime_title}</span>
+          <div className="anime-card" onClick={() => handleShowModal(anime)}>
+            <div className="imgHolder">
+              <img
+                src={`/images/${anime.anime_id}.jpeg`}
+                alt={anime.input_anime_title}
+                onError={(e) => e.target.src = PlaceholderImg}
+                className={anime.orientation === "landscape" ? "landscape" : ""}
+              />
             </div>
-          </Link>
+            <span>{anime.input_anime_title}</span>
+          </div>
         </SwiperSlide>
       ))}
     </Swiper>
@@ -78,19 +95,17 @@ function AnimeSlider() {
       )}
       {animeList.map((anime) => (
         <SwiperSlide key={anime.anime_id + i++}>
-          <Link to={`/anime/${anime.anime_id}`}>
-            <div className="anime-card">
-              <div className="imgHolder">
-                <img
-                  src={`/images/${anime.anime_id}.jpeg`}
-                  alt={anime.input_anime_title}
-                  onError={(e) => e.target.src = PlaceholderImg}
-                  className={anime.orientation === "landscape" ? "landscape" : ""}
-                />
-              </div>
-              <span>{anime.input_anime_title}</span>
+          <div className="anime-card" onClick={() => handleShowModal(anime)}>
+            <div className="imgHolder">
+              <img
+                src={`/images/${anime.anime_id}.jpeg`}
+                alt={anime.input_anime_title}
+                onError={(e) => e.target.src = PlaceholderImg}
+                className={anime.orientation === "landscape" ? "landscape" : ""}
+              />
             </div>
-          </Link>
+            <span>{anime.input_anime_title}</span>
+          </div>
         </SwiperSlide>
       ))}
     </Swiper>
@@ -113,19 +128,17 @@ function AnimeSlider() {
       )}
       {animeList.map((anime) => (
         <SwiperSlide key={anime.anime_id + i++}>
-          <Link to={`/anime/${anime.anime_id}`}>
-            <div className="anime-card">
-              <div className="imgHolder">
-                <img
-                  src={`/images/${anime.anime_id}.jpeg`}
-                  alt={anime.input_anime_title}
-                  onError={(e) => e.target.src = PlaceholderImg}
-                  className={anime.orientation === "landscape" ? "landscape" : ""}
-                />
-              </div>
-              <span>{anime.input_anime_title}</span>
+          <div className="anime-card" onClick={() => handleShowModal(anime)}>
+            <div className="imgHolder">
+              <img
+                src={`/images/${anime.anime_id}.jpeg`}
+                alt={anime.input_anime_title}
+                onError={(e) => e.target.src = PlaceholderImg}
+                className={anime.orientation === "landscape" ? "landscape" : ""}
+              />
             </div>
-          </Link>
+            <span>{anime.input_anime_title}</span>
+          </div>
         </SwiperSlide>
       ))}
     </Swiper>
@@ -141,12 +154,19 @@ function AnimeSlider() {
           <span className="slider-title fs-4 text-uppercase border-bottom border-2 border-main-color">
             Anime list
           </span>
-          <Link to={"animelist/top/1"} className="view-more fs-6 text-uppercase">
+          <Link to={"anime"} className="view-more fs-6 text-uppercase">
             view more
           </Link>
         </div>
         {isSmallScreen ? <SmSwiper /> : isMedScreen ? <MdSwiper /> : <LgSwiper />}
       </div>
+      {selectedAnime && (
+        <AnimeModal
+          show={showModal}
+          handleClose={handleCloseModal}
+          anime={selectedAnime}
+        />
+      )}
     </section>
   );
 }

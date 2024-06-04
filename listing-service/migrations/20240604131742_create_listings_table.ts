@@ -1,5 +1,5 @@
 exports.up = function(knex) {
-    return knex.schema.createTable('listing', function(table) {
+    return knex.schema.createTable('listings', function(table) {
       table.increments('anime_id').primary();
       table.string('input_anime_title');
       table.string('facet_Attribute');
@@ -9,6 +9,6 @@ exports.up = function(knex) {
   };
   
   exports.down = function(knex) {
-    return knex.schema.dropTable('listing');
+    return knex.schema.dropTable('listings');
   };
   

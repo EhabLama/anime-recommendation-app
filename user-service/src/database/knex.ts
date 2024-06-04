@@ -19,6 +19,10 @@ export class KnexService {
     });
   }
 
+  async onModuleInit() {
+    await this.db.migrate.latest();
+  }
+
   getDbConnection(): Knex {
     return this.db;
   }

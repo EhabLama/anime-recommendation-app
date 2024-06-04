@@ -1,6 +1,10 @@
 import { knex, Knex } from 'knex';
 import { ConfigService } from '@nestjs/config';
 import { Injectable } from '@nestjs/common';
+import * as dotenv from 'dotenv';
+
+
+dotenv.config();
 
 @Injectable()
 export class KnexService {
@@ -11,12 +15,17 @@ export class KnexService {
       client: 'pg',
       connection: this.configService.get<string>('DATABASE_URL'),
       migrations: {
-        directory: './migrations',
+        directory: '../../migrations',
       },
       seeds: {
-        directory: './seeds',
+        directory: '../../seeds',
       },
     });
+  }
+
+  async onModuleInit() {
+    await this.db.migrate.latest();
+    await this.db.seed.run();
   }
 
   getDbConnection(): Knex {

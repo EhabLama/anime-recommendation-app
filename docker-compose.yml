@@ -1,0 +1,69 @@
+version: '3'
+services:
+  frontend-app:
+    build:
+      context: ./frontend-app
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - listing-service
+      - user-service
+    environment:
+      - NODE_ENV=development
+    env_file:
+      - .env
+
+  listing-service:
+    build:
+      context: ./listing-service
+      dockerfile: Dockerfile
+    volumes:
+      - ./listing-service:/app
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=${LISTING_SERVICE_DATABASE_URL}
+    depends_on:
+      - listing-postgres
+    env_file:
+      - .env
+
+  user-service:
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+    volumes:
+      - ./listing-service:/app
+    ports:
+      - "3002:3002"
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=${USER_SERVICE_DATABASE_URL}
+    depends_on:
+      - user-postgres
+    env_file:
+      - .env
+
+  listing-postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: listings_service
+    ports:
+      - "5433:5432"
+    env_file:
+      - .env
+
+  user-postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: user_service
+    ports:
+      - "5434:5432"
+    env_file:
+      - .env

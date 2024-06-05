@@ -1,9 +1,9 @@
 exports.seed = function(knex) {
     // Delete ALL existing entries
-    return knex('listing').del()
+    return knex('listings').del()
       .then(function () {
         // Inserts seed entries
-        return knex('listing').insert([
+        return knex('listings').insert([
           {anime_id: 51868, input_anime_title: 'dokidoki ghost mansion', facet_Attribute: 'Plot', recommended_anime_title: 'Death of Iconic Character', recommended_anime_id: 41457},
           {anime_id: 369, input_anime_title: 'boogiepop wa warawanai', facet_Attribute: 'CharacterTraits', recommended_anime_title: 'Vengeance-driven', recommended_anime_id: 41457},
           {anime_id: 234, input_anime_title: 'dan doh!!', facet_Attribute: 'CharacterTraits', recommended_anime_title: 'Vengeance-driven', recommended_anime_id: 41457},

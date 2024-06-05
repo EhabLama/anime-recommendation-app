@@ -13,10 +13,6 @@ RUN npm install
 # Copy the rest of the application code to the working directory
 COPY . .
 
-# Copy the migrations and seeds directories explicitly
-COPY src/database/migrations ./src/database/migrations
-COPY src/database/seeds ./src/database/seeds
-
 # Expose the port the service runs on
 EXPOSE 3001
 

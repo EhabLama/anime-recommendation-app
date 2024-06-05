@@ -1,9 +1,12 @@
-version: '3'
+version: '3.8'
 services:
   frontend-app:
     build:
       context: ./frontend-app
       dockerfile: Dockerfile
+    volumes:
+      - ./frontend-app:/app
+      - /app/node_modules
     ports:
       - "3000:3000"
     depends_on:
@@ -20,42 +23,55 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./listing-service:/app
+      - /app/node_modules
     ports:
       - "3001:3001"
     environment:
       - NODE_ENV=development
       - DATABASE_URL=${LISTING_SERVICE_DATABASE_URL}
     depends_on:
-      - listing-postgres
+      listing-postgres:
+        condition: service_healthy
     env_file:
       - .env
+    command: sh -c "npx knex migrate:latest && npm start"
 
   user-service:
     build:
       context: ./user-service
       dockerfile: Dockerfile
     volumes:
-      - ./listing-service:/app
+      - ./user-service:/app
+      - /app/node_modules
     ports:
       - "3002:3002"
     environment:
       - NODE_ENV=development
       - DATABASE_URL=${USER_SERVICE_DATABASE_URL}
     depends_on:
-      - user-postgres
+      user-postgres:
+        condition: service_healthy
     env_file:
       - .env
+    command: sh -c "npx knex migrate:latest && npm start"
 
   listing-postgres:
     image: postgres:15
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: listings_service
+      POSTGRES_DB: listing_service
     ports:
       - "5433:5432"
     env_file:
       - .env
+    volumes:
+      - postgres_data_listing:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   user-postgres:
     image: postgres:15
@@ -67,3 +83,14 @@ services:
       - "5434:5432"
     env_file:
       - .env
+    volumes:
+      - postgres_data_user:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data_listing:
+  postgres_data_user:

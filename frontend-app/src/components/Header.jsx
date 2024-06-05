@@ -1,51 +1,55 @@
-import React, { useState, useEffect } from 'react';
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import webLogo from '../assets/images/logo.png';
-import { Link, useNavigate } from 'react-router-dom';
-import { fetchUserProfile, signup, login, signout } from '../api';
-import Modal from 'react-bootstrap/Modal';
-import '../styles/Header.css';
+import React, { useState, useEffect } from "react";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import webLogo from "../assets/images/logo.png";
+import { Link } from "react-router-dom";
+import { fetchUserProfile, signup, login, signout } from "../api";
+import Modal from "react-bootstrap/Modal";
+import "../styles/Header.css";
 
 function AppNavbar() {
   const [showPopup, setShowPopup] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userProfile, setUserProfile] = useState(null);
-  const [formType, setFormType] = useState('');
-  const [formData, setFormData] = useState({ email: '', password: '', name: '' });
+  const [formType, setFormType] = useState("");
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    name: "",
+  });
   const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState('');
-
-  const navigate = useNavigate();
+  const [modalMessage, setModalMessage] = useState("");
 
   const handleIconClick = () => {
     setShowPopup(!showPopup);
     if (isLoggedIn && !userProfile) {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       fetchUserProfile(token)
         .then((profile) => setUserProfile(profile))
-        .catch((error) => console.error('Failed to fetch user profile:', error));
+        .catch((error) =>
+          console.error("Failed to fetch user profile:", error)
+        );
     }
   };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (formType === 'login') {
+      if (formType === "login") {
         const data = await login(formData.email, formData.password);
-        localStorage.setItem('token', data.token);
+        localStorage.setItem("token", data.token);
         setIsLoggedIn(true);
         setUserProfile(data.user);
-        setModalMessage('Login successful!');
-      } else if (formType === 'signup') {
+        setModalMessage("Login successful!");
+      } else if (formType === "signup") {
         await signup(formData.name, formData.email, formData.password);
-        setFormType('login');
-        setModalMessage('Signup successful! Please log in.');
+        setFormType("login");
+        setModalMessage("Signup successful! Please log in.");
       }
       setShowPopup(false);
     } catch (error) {
-      console.error('Error during form submission:', error);
+      console.error("Error during form submission:", error);
       setModalMessage(`Error: ${error.message}`);
     } finally {
       setShowModal(true);
@@ -62,13 +66,13 @@ function AppNavbar() {
     signout();
     setIsLoggedIn(false);
     setUserProfile(null);
-    setModalMessage('You have been signed out.');
+    setModalMessage("You have been signed out.");
     setShowModal(true);
     setTimeout(() => setShowModal(false), 2000); // Hide modal after 2 seconds
   };
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (token) {
       setIsLoggedIn(true);
     }
@@ -108,11 +112,13 @@ function AppNavbar() {
                 <div className="user-popup">
                   {isLoggedIn ? (
                     <div>
-                      <p>Welcome, {userProfile?.name || 'User'}!</p>
+                      <p>Welcome, {userProfile?.name || "User"}!</p>
                       <p>Email: {userProfile?.email}</p>
-                      <button onClick={handleSignout}  className="auth-button">Sign Out</button>
+                      <button onClick={handleSignout} className="auth-button">
+                        Sign Out
+                      </button>
                     </div>
-                  ) : formType === 'login' ? (
+                  ) : formType === "login" ? (
                     <div>
                       <h2>Login</h2>
                       <form onSubmit={handleFormSubmit}>
@@ -139,10 +145,24 @@ function AppNavbar() {
                         <button type="submit">Login</button>
                       </form>
                       <p>
-                        Don't have an account? <a href="#" onClick={() => setFormType('signup')}>Sign up</a>
+                        Don't have an account?{" "}
+                        <button
+                          type="button"
+                          onClick={() => setFormType("signup")}
+                          style={{
+                            background: "none",
+                            border: "none",
+                            color: "#007bff",
+                            textDecoration: "underline",
+                            cursor: "pointer",
+                            padding: 0,
+                          }}
+                        >
+                          Sign up
+                        </button>
                       </p>
                     </div>
-                  ) : formType === 'signup' ? (
+                  ) : formType === "signup" ? (
                     <div>
                       <h2>Sign Up</h2>
                       <form onSubmit={handleFormSubmit}>
@@ -179,14 +199,58 @@ function AppNavbar() {
                         <button type="submit">Sign Up</button>
                       </form>
                       <p>
-                        Already have an account? <a href="#" onClick={() => setFormType('login')}>Login</a>
+                        Already have an account?{" "}
+                        <button
+                          type="button"
+                          onClick={() => setFormType("login")}
+                          style={{
+                            background: "none",
+                            border: "none",
+                            color: "#007bff",
+                            textDecoration: "underline",
+                            cursor: "pointer",
+                            padding: 0,
+                          }}
+                        >
+                          Login
+                        </button>
                       </p>
                     </div>
                   ) : (
                     <div>
                       <p>You are not logged in.</p>
                       <p>
-                        Please <a href="#" onClick={() => setFormType('login')}>login</a> or <a href="#" onClick={() => setFormType('signup')}>sign up</a>.
+                        Please{" "}
+                        <button
+                          type="button"
+                          onClick={() => setFormType("login")}
+                          style={{
+                            background: "none",
+                            border: "none",
+                            color: "#007bff",
+                            textDecoration: "underline",
+                            cursor: "pointer",
+                            padding: 0,
+                          }}
+                        >
+                          login
+                        </button>{" "}
+                        or{" "}
+                        <button
+                          type="button"
+                          onClick={() => setFormType("signup")}
+                          style={{
+                            background: "none",
+                            border: "none",
+                            color: "#007bff",
+                            textDecoration: "underline",
+                            cursor: "pointer",
+                            padding: 0,
+                          }}
+                        >
+                          Sign up
+                        </button>
+                        .
                       </p>
                     </div>
                   )}
@@ -196,10 +260,12 @@ function AppNavbar() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <Modal show={showModal} onHide={() => setShowModal(false)} className="custom-modal">
-        <Modal.Body className="modal-body">
-          {modalMessage}
-        </Modal.Body>
+      <Modal
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        className="custom-modal"
+      >
+        <Modal.Body className="modal-body">{modalMessage}</Modal.Body>
       </Modal>
     </header>
   );

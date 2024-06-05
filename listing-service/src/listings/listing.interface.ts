@@ -1,4 +1,4 @@
-export interface Listing {
+export interface Listings {
   anime_id: number;
   input_anime_title: string;
   facet_Attribute: string;

@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { KnexService } from '../database/knex';
-import { Listing } from '../listings/listing.interface';
+import { Listings } from '../listings/listing.interface';
 
 @Injectable()
 export class ListingsService {
   constructor(private knexService: KnexService) {}
 
-  async getAllListings(): Promise<Listing[]> {
+  async getAllListings(): Promise<Listings[]> {
     const db = this.knexService.getDbConnection();
-    return await db<Listing>('listing').select('*');
+    return await db<Listings>('listings').select('*');
   }
 }

@@ -3,7 +3,6 @@ import { ConfigService } from '@nestjs/config';
 import { Injectable } from '@nestjs/common';
 import * as dotenv from 'dotenv';
 
-
 dotenv.config();
 
 @Injectable()
@@ -15,10 +14,10 @@ export class KnexService {
       client: 'pg',
       connection: this.configService.get<string>('DATABASE_URL'),
       migrations: {
-        directory: '../../migrations',
+        directory: './src/database/migrations',
       },
       seeds: {
-        directory: '../../seeds',
+        directory: './src/database/seeds',
       },
     });
   }

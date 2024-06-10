@@ -24,8 +24,8 @@ This project is a web application for browsing anime listings, signing up, loggi
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/your-username/your-repository.git
-   cd your-repository
+   git clone https://github.com/EhabLama/anime-recommendation-app.git
+   cd anime-recommendation-app
    
 2. **Create .env file:**
 

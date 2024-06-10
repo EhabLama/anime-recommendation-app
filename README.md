@@ -46,9 +46,12 @@ docker-compose up --build
 The frontend can be accessed at http://localhost:3000.
 
 ## Usage
-Browse anime listings: Navigate to the Anime page.
+Browse anime listings: Press on anime cards to view details.
+
 Sign up: Click on the Sign Up link in the navigation bar and fill out the form.
+
 Log in: Click on the Log In link in the navigation bar and enter your credentials.
+
 View user profile: Click on the Profile icon in the navigation bar.
 
 
